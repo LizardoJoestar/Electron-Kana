@@ -1,0 +1,2 @@
+#Ignore electron module because it's too large (<100MB)
+electron/

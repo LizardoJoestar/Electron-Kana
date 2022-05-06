@@ -1,0 +1,14 @@
+{
+  "name": "electron-kana",
+  "version": "1.0.0",
+  "description": "Kana - A tool to memorize the japanese syllabary built using Electronjs",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Khas",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "electron": "^18.0.1"
+  }
+}

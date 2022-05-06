@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kana</title>
+  </head>
+  <body>
+    <!-- Electron.js and Node.js testing -->
+    <div>
+      <h1>Hello World!</h1>
+      We are using Node.js <span id="node-version"></span>,
+      Chromium <span id="chrome-version"></span>,
+      and Electron <span id="electron-version"></span>.
+    </div>
+
+    <!-- Header -->
+    <header>
+      <img src="#" alt="Kana logo">
+      <h1>Kana</h1>
+      <h2>Herramienta para el aprendizaje del silabario japonés</h2>
+    </header>
+
+    <!-- Menu -->
+    <nav>
+      <!-- Practice modules -->
+      <button id="HR">Práctica Hiragana-Romaji</button>
+      <button id="RH">Práctica Romaji-Hiragana</button>
+      <button id="KR">Práctica Katakana-Romaji</button>
+      <button id="RK">Práctica Romaji-Katakana</button>
+      <button id="PW">Práctica con palabras</button>
+
+      <!-- Reference modules -->
+      <button onclick="window.location.href='reference_syllabes.html'">Tabla de sílabas</button>
+      <button onclick="window.location.href='reference_diagrams.html'">Cómo escribir cada kana</button>
+    </nav>
+
+    <!-- Footer -->
+    <footer>
+      <h4>Por Caleb, Cristian, Eliel. 2022.</h4>
+    </footer>
+
+    <script type="module" src="../js/flags.js"></script>
+  </body>
+</html>
