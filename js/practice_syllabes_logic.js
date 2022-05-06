@@ -101,6 +101,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+            
+            checkAnswer();
+            counter++;
         });
         ans2.addEventListener('click', (event) => {
             if (hiraganaValues.includes( { kana: question.src, romaji: ans2.src } )) {
@@ -109,6 +112,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+            
+            checkAnswer();
+            counter++;
         });
         ans3.addEventListener('click', (event) => {
             if (hiraganaValues.includes( { kana: question.src, romaji: ans3.src } )) {
@@ -117,6 +123,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
         ans4.addEventListener('click', (event) => {
             if (hiraganaValues.includes( { kana: question.src, romaji: ans4.src } )) {
@@ -125,6 +134,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
     }
     else if (q === 'romaji' && a === 'hiragana') {
@@ -135,6 +147,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
         ans2.addEventListener('click', (event) => {
             if (hiraganaValues.includes( { kana: ans2.src, romaji: question.src } )) {
@@ -143,6 +158,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
         ans3.addEventListener('click', (event) => {
             if (hiraganaValues.includes( { kana: ans3.src, romaji: question.src } )) {
@@ -151,6 +169,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
         ans4.addEventListener('click', (event) => {
             if (hiraganaValues.includes( { kana: ans4.src, romaji: question.src } )) {
@@ -159,6 +180,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
     }
     else if (q === 'katakana' && a === 'romaji') {
@@ -169,6 +193,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
         ans2.addEventListener('click', (event) => {
             if (katakanaValues.includes( { kana: question.src, romaji: ans2.src } )) {
@@ -177,6 +204,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
         ans3.addEventListener('click', (event) => {
             if (katakanaValues.includes( { kana: question.src, romaji: ans3.src } )) {
@@ -185,6 +215,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
         ans4.addEventListener('click', (event) => {
             if (katakanaValues.includes( { kana: question.src, romaji: ans4.src } )) {
@@ -193,6 +226,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
     }
     else if (q === 'romaji' && a === 'katakana') {
@@ -203,6 +239,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
         ans2.addEventListener('click', (event) => {
             if (katakanaValues.includes( { kana: ans2.src, romaji: question.src } )) {
@@ -211,6 +250,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
         ans3.addEventListener('click', (event) => {
             if (katakanaValues.includes( { kana: ans3.src, romaji: question.src } )) {
@@ -219,6 +261,9 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
         ans4.addEventListener('click', (event) => {
             if (katakanaValues.includes( { kana: ans4.src, romaji: question.src } )) {
@@ -227,7 +272,20 @@ function chooseAnswer(q, a) {
             else {
                 check = false;
             }
+
+            checkAnswer();
+            counter++;
         });
+    }
+}
+
+function checkAnswer() {
+    if (check) {
+        successes += 1;
+        successPercent = (successes / counter)*100;
+    }
+    else {
+        fails += 1;
     }
 }
 
@@ -236,20 +294,17 @@ function initPractice(q, a) {
     let successesID = document.getElementById('successes');
     let failsID = document.getElementById('fails');
     let successPercentID = document.getElementById('success-percent');
+    
+    // Set event listeners for answer group. Must be run
+    // only ONCE per session to avoid memory issues 
+    chooseAnswer(q, a);
 
     while (counter < 100) {
         getRandomQuestion(q, a);
         getRandomAnswers(q, a);
-        chooseAnswer(q, a);
         // Check if answer is correct, then update variables
-        if (check) {
-            successes += 1;
-            successPercent = (successes / counter)*100;
-        }
-        else {
-            fails += 1;
-        }
-        counter += 1;
+        
+        // counter += 1;
 
         // Update variables on screen
         counterID.innerText = counter.toString();
