@@ -37,6 +37,7 @@ function getRandomQuestion(q, a) {
     else if (q === 'romaji' && a === 'romaji') {
         questionImg.src = `${katakanaValues[index].romaji}`;
     }
+    console.log('getRandomQuestion');
 }
 
 function getRandomAnswers(q, a) {
@@ -69,6 +70,8 @@ function getRandomAnswers(q, a) {
         ansImg3.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
         ansImg4.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;   
     }
+
+    console.log('getRandomAnswers');
 }
 
 function chooseAnswer(q, a) {
@@ -300,6 +303,8 @@ function initPractice(q, a) {
     chooseAnswer(q, a);
 
     while (counter < 100) {
+        // These get called constantly; it REALLY shouldn't. It blocks every 
+        // other process!!!
         getRandomQuestion(q, a);
         getRandomAnswers(q, a);
         // Check if answer is correct, then update variables
