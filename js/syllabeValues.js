@@ -10,11 +10,11 @@ const hiraganaValues = [
 ];
 
 const katakanaValues = [
-    { kana: '../img/katakana/hira-a.png', romaji: '../img/romaji/roma-a.png' },
-    { kana: '../img/katakana/hira-e.png', romaji: '../img/romaji/roma-e.png' },
-    { kana: '../img/katakana/hira-i.png', romaji: '../img/romaji/roma-i.png' },
-    { kana: '../img/katakana/hira-o.png', romaji: '../img/romaji/roma-o.png' },
-    { kana: '../img/katakana/hira-u.png', romaji: '../img/romaji/roma-u.png' }    
+    { kana: '../img/katakana/kata-a.png', romaji: '../img/romaji/roma-a.png' },
+    { kana: '../img/katakana/kata-e.png', romaji: '../img/romaji/roma-e.png' },
+    { kana: '../img/katakana/kata-i.png', romaji: '../img/romaji/roma-i.png' },
+    { kana: '../img/katakana/kata-o.png', romaji: '../img/romaji/roma-o.png' },
+    { kana: '../img/katakana/kata-u.png', romaji: '../img/romaji/roma-u.png' }    
 ];
 
 export {hiraganaValues, katakanaValues}

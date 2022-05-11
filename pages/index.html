@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kana</title>
-  </head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Kana</title>
+      <link rel="stylesheet" href="../bootstrap/css/bootstrap.css"/>
+	    <link rel="stylesheet" href="../css/styles.css"/>
+      </head>
   <body>
     <!-- Electron.js and Node.js testing -->
-    <div>
+    <div style="background-color: black;">
       <h1>Hello World!</h1>
       We are using Node.js <span id="node-version"></span>,
       Chromium <span id="chrome-version"></span>,
@@ -17,28 +19,43 @@
 
     <!-- Header -->
     <header>
-      <img src="#" alt="Kana logo">
-      <h1>Kana</h1>
-      <h2>Herramienta para el aprendizaje del silabario japonés</h2>
+      <center>
+        <img src="#" alt="Kana logo">
+        <h1>Kana</h1>
+        <h2>Herramienta para el aprendizaje del silabario japonés</h2>
+      </center>
     </header>
 
     <!-- Menu -->
     <nav>
-      <!-- Practice modules -->
-      <button id="HR">Práctica Hiragana-Romaji</button>
-      <button id="RH">Práctica Romaji-Hiragana</button>
-      <button id="KR">Práctica Katakana-Romaji</button>
-      <button id="RK">Práctica Romaji-Katakana</button>
-      <button id="PW">Práctica con palabras</button>
+      <center>
+        <!-- Practice modules -->
+        <div class="elem-space">
+          <button id="HR" class="btn btn-dark btn-lg btn-block">Práctica Hiragana-Romaji</button>
+          <button id="RH" class="btn btn-dark btn-lg btn-block">Práctica Romaji-Hiragana</button>
+        </div>
+        <div class="elem-space">
+          <button id="KR" class="btn btn-dark btn-lg btn-block">Práctica Katakana-Romaji</button>
+          <button id="RK" class="btn btn-dark btn-lg btn-block">Práctica Romaji-Katakana</button>
+        </div>
+        <div class="elem-space">
+          <button id="PW" class="btn btn-dark btn-lg btn-block">Práctica con palabras</button>
+        </div>
+          
 
-      <!-- Reference modules -->
-      <button onclick="window.location.href='reference_syllabes.html'">Tabla de sílabas</button>
-      <button onclick="window.location.href='reference_diagrams.html'">Cómo escribir cada kana</button>
+        <!-- Reference modules -->
+        <div class="elem-space">
+          <button class="btn btn-dark btn-lg btn-block" onclick="window.location.href='reference_syllabes.html'">Tabla de sílabas</button>
+          <button class="btn btn-dark btn-lg btn-block" onclick="window.location.href='reference_diagrams.html'">Cómo escribir cada kana</button>
+        </div>
+      </center>
     </nav>
 
     <!-- Footer -->
     <footer>
-      <h4>Por Caleb, Cristian, Eliel. 2022.</h4>
+      <center>
+        <h4>Por Caleb, Cristian, Eliel. 2022.</h4>
+      </center>
     </footer>
 
     <script type="module" src="../js/flags.js"></script>
