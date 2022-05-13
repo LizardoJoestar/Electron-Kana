@@ -7,10 +7,13 @@ var successes = 0;
 var fails = 0;
 var successPercent = 0;
 var counter = 0;
+var temp_counter = 0;
 
-// Set up answers-DOM id selection
-
-// Set up event listeners for answer selection
+// Set up tracking variables-DOM id selection
+let counterID = document.getElementById('counter');
+let successesID = document.getElementById('successes');
+let failsID = document.getElementById('fails');
+let successPercentID = document.getElementById('success-percent');
 
 // Set up algorithm steps as functions (some of them)
 function getRandomIntInclusive(min, max) {
@@ -85,10 +88,6 @@ function chooseAnswer(q, a) {
     // 3. Check if the particular combination in the user selection
     //    exists
     // 4. If it does, it's a correct answer. If not, it's incorrect
-
-    // IMPORTANT DEFECT: This does not in any way remove all those event listeners after
-    // each iteration, which may cause memory issues. They should be declared only once
-    // and outside this function, somehow
 
     const question = document.getElementById('question');
     const ans1 = document.getElementById('img1');
@@ -292,34 +291,35 @@ function checkAnswer() {
     }
 }
 
+function loopPractice(q, a) {
+    getRandomQuestion(q, a);
+    getRandomAnswers(q, a);
+
+    temp_counter = counter;
+
+    while (counter < 100) {
+        // If some answer was clicked (this changes the counter variable)
+        if (temp_counter != counter) {
+            // Update variables on screen
+            counterID.innerText = counter.toString();
+            successesID.innerText = successes.toString();
+            failsID.innerText = fails.toString();
+            successPercentID.innerText = successPercent.toString();
+            
+            loopPractice(q, a);
+        }
+        // Else, keep waiting for answer clicked   
+    }    
+}
+
 function initPractice(q, a) {
-    let counterID = document.getElementById('counter');
-    let successesID = document.getElementById('successes');
-    let failsID = document.getElementById('fails');
-    let successPercentID = document.getElementById('success-percent');
-    
     // Set event listeners for answer group. Must be run
     // only ONCE per session to avoid memory issues 
     chooseAnswer(q, a);
-
-    while (counter < 100) {
-        // These get called constantly; it REALLY shouldn't. It blocks every 
-        // other process!!!
-        getRandomQuestion(q, a);
-        getRandomAnswers(q, a);
-        // Check if answer is correct, then update variables
-        
-        // counter += 1;
-
-        // Update variables on screen
-        counterID.innerText = counter.toString();
-        successesID.innerText = successes.toString();
-        failsID.innerText = fails.toString();
-        successPercentID.innerText = successPercent.toString();
-    }
+    loopPractice(q, a);
     
     // Finish and go back to menu
-    window.location.href = '../pages/index.html';
+    // window.location.href = '../pages/index.html';
     
 }
 

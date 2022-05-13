@@ -1,6 +1,6 @@
 import { initPractice } from "./practice_syllabes_logic.js";
 
-// Read flags in localstorage
+// Read flags from localStorage
 const questions = localStorage.getItem('questions');
 const answers = localStorage.getItem('answers');
 
