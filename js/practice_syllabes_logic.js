@@ -52,8 +52,6 @@ function getRandomQuestion() {
     else if (q === 'romaji' && a === 'katakana') {
         questionImg.src = `${katakanaValues[index].romaji}`;
     }
-    console.log('getRandomQuestion:');
-    console.log(questionImg.src);
 }
 
 function getRandomAnswers() {
@@ -86,9 +84,6 @@ function getRandomAnswers() {
         ansImg3.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
         ansImg4.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;   
     }
-
-    console.log('getRandomAnswers:');
-    console.log([ansImg1, ansImg2, ansImg3, ansImg4]);
 }
 
 function chooseAnswer(answer, objOrder, kanaValues) {
@@ -136,10 +131,12 @@ function chooseAnswer(answer, objOrder, kanaValues) {
         if (kanaValues.some(element => JSON.stringify(objOrder) === JSON.stringify(element))) {
             check = true;
             console.log('q: '+ questionSRC + ' a: ' + answerSRC);
+            console.log(JSON.stringify(objOrder));
         }
         else {
             check = false;
             console.log('q: '+ questionSRC + ' a: ' + answerSRC);
+            console.log(JSON.stringify(objOrder));
         }
         
         checkAnswer();
