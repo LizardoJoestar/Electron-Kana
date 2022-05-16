@@ -11,7 +11,10 @@ var check = false;
 var successes = 0;
 var fails = 0;
 var successPercent = 0;
-var counter = 0;
+var counter = 1; // to avoid dividing by 0
+
+// Maximum number of questions
+let maxQuestions = 10;
 
 // Set up tracking variables-DOM id selection
 let counterID = document.getElementById('counter');
@@ -37,52 +40,46 @@ function getRandomIntInclusive(min, max) {
 
 function getRandomQuestion() {
     let index = getRandomIntInclusive(1, hiraganaValues.length-1);
-    let questionImg = document.getElementById('question');
 
     // Show the question
     if (q === 'hiragana' && a === 'romaji') {
-        questionImg.src = `${hiraganaValues[index].kana}`;
+        question.src = `${hiraganaValues[index].kana}`;
     }
     else if (q === 'romaji' && a === 'hiragana') {
-        questionImg.src = `${hiraganaValues[index].romaji}`;
+        question.src = `${hiraganaValues[index].romaji}`;
     }
     else if (q === 'katakana' && a === 'romaji') {
-        questionImg.src = `${katakanaValues[index].kana}`;
+        question.src = `${katakanaValues[index].kana}`;
     }
     else if (q === 'romaji' && a === 'katakana') {
-        questionImg.src = `${katakanaValues[index].romaji}`;
+        question.src = `${katakanaValues[index].romaji}`;
     }
 }
 
 function getRandomAnswers() {
-    let ansImg1 = document.getElementById('img1');
-    let ansImg2 = document.getElementById('img2');
-    let ansImg3 = document.getElementById('img3');
-    let ansImg4 = document.getElementById('img4');
-
     if (q === 'hiragana' && a === 'romaji') {
-        ansImg1.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ansImg2.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ansImg3.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ansImg4.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
+        ans1.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
+        ans2.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
+        ans3.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
+        ans4.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
     }
     else if (q === 'romaji' && a === 'hiragana') {
-        ansImg1.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ansImg2.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ansImg3.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ansImg4.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
+        ans1.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
+        ans2.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
+        ans3.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
+        ans4.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
     }
     else if (q === 'katakana' && a === 'romaji') {
-        ansImg1.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ansImg2.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ansImg3.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ansImg4.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;    
+        ans1.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
+        ans2.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
+        ans3.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
+        ans4.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;    
     }
     else if (q === 'romaji' && a === 'katakana') {
-        ansImg1.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ansImg2.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ansImg3.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ansImg4.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;   
+        ans1.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
+        ans2.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
+        ans3.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
+        ans4.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;   
     }
 }
 
@@ -130,12 +127,12 @@ function chooseAnswer(answer, objOrder, kanaValues) {
         // Update check variables, and counter (using rebuilt strings!!)
         if (kanaValues.some(element => JSON.stringify(objOrder) === JSON.stringify(element))) {
             check = true;
-            console.log('q: '+ questionSRC + ' a: ' + answerSRC);
+            console.log('CORRECT');
             console.log(JSON.stringify(objOrder));
         }
         else {
             check = false;
-            console.log('q: '+ questionSRC + ' a: ' + answerSRC);
+            console.log('INCORRECT');
             console.log(JSON.stringify(objOrder));
         }
         
@@ -146,7 +143,7 @@ function chooseAnswer(answer, objOrder, kanaValues) {
         updateScreenVariables();
 
         // And determine if looping is needed:
-        if (counter < 10) {
+        if (counter <= maxQuestions) {
             // Reset the question and answers
             setQA();
         }
@@ -155,6 +152,7 @@ function chooseAnswer(answer, objOrder, kanaValues) {
             window.location.href = '../pages/index.html';
         }
     });
+    console.log('Added event listener for: ' + answer.alt);
 }
 
 function checkAnswer() {
@@ -177,7 +175,7 @@ function updateScreenVariables() {
     counterID.innerText = counter.toString();
     successesID.innerText = successes.toString();
     failsID.innerText = fails.toString();
-    successPercentID.innerText = successPercent.toString();    
+    successPercentID.innerText = successPercent.toFixed(2).toString();    
 }
 
 function initPractice(question, answer) {
@@ -187,7 +185,6 @@ function initPractice(question, answer) {
 
     // Set event listeners for answer group. Must be run
     // only ONCE per session to avoid memory issues 
-
     if (q === 'hiragana' && a === 'romaji') {
         chooseAnswer(ans1, { kana: 'questionSRC', romaji: 'answerSRC' }, hiraganaValues);
         chooseAnswer(ans2, { kana: 'questionSRC', romaji: 'answerSRC' }, hiraganaValues);
