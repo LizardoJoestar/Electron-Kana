@@ -192,10 +192,10 @@ function initPractice(question, answer) {
         chooseAnswer(ans4, { kana: 'questionSRC', romaji: 'answerSRC' }, hiraganaValues);
     }
     else if (q === 'romaji' && a === 'hiragana') {
-        chooseAnswer(ans1, { kana: 'answerSrC', romaji: 'questionSRC' }, hiraganaValues);
-        chooseAnswer(ans2, { kana: 'answerSrC', romaji: 'questionSRC' }, hiraganaValues);
-        chooseAnswer(ans3, { kana: 'answerSrC', romaji: 'questionSRC' }, hiraganaValues);
-        chooseAnswer(ans4, { kana: 'answerSrC', romaji: 'questionSRC' }, hiraganaValues);
+        chooseAnswer(ans1, { kana: 'answerSRC', romaji: 'questionSRC' }, hiraganaValues);
+        chooseAnswer(ans2, { kana: 'answerSRC', romaji: 'questionSRC' }, hiraganaValues);
+        chooseAnswer(ans3, { kana: 'answerSRC', romaji: 'questionSRC' }, hiraganaValues);
+        chooseAnswer(ans4, { kana: 'answerSRC', romaji: 'questionSRC' }, hiraganaValues);
     }
     else if (q === 'katakana' && a === 'romaji') {
         chooseAnswer(ans1, { kana: 'questionSRC', romaji: 'answerSRC' }, katakanaValues);
@@ -204,10 +204,10 @@ function initPractice(question, answer) {
         chooseAnswer(ans4, { kana: 'questionSRC', romaji: 'answerSRC' }, katakanaValues);
     }
     else if (q === 'romaji' && a === 'katakana') {
-        chooseAnswer(ans1, { kana: 'answerSrC', romaji: 'questionSRC' }, katakanaValues);
-        chooseAnswer(ans2, { kana: 'answerSrC', romaji: 'questionSRC' }, katakanaValues);
-        chooseAnswer(ans3, { kana: 'answerSrC', romaji: 'questionSRC' }, katakanaValues);
-        chooseAnswer(ans4, { kana: 'answerSrC', romaji: 'questionSRC' }, katakanaValues);
+        chooseAnswer(ans1, { kana: 'answerSRC', romaji: 'questionSRC' }, katakanaValues);
+        chooseAnswer(ans2, { kana: 'answerSRC', romaji: 'questionSRC' }, katakanaValues);
+        chooseAnswer(ans3, { kana: 'answerSRC', romaji: 'questionSRC' }, katakanaValues);
+        chooseAnswer(ans4, { kana: 'answerSRC', romaji: 'questionSRC' }, katakanaValues);
     }
 
     // Print screen variables for first time once
