@@ -7,7 +7,6 @@ var successes = 0;
 var fails = 0;
 var successPercent = 0;
 var counter = 0;
-var temp_counter = 0;
 
 // Set up tracking variables-DOM id selection
 let counterID = document.getElementById('counter');
@@ -37,10 +36,11 @@ function getRandomQuestion(q, a) {
     else if (q === 'katakana' && a === 'romaji') {
         questionImg.src = `${katakanaValues[index].kana}`;
     }
-    else if (q === 'romaji' && a === 'romaji') {
+    else if (q === 'romaji' && a === 'katakana') {
         questionImg.src = `${katakanaValues[index].romaji}`;
     }
-    console.log('getRandomQuestion');
+    console.log('getRandomQuestion:');
+    console.log(questionImg.src);
 }
 
 function getRandomAnswers(q, a) {
@@ -74,7 +74,8 @@ function getRandomAnswers(q, a) {
         ansImg4.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;   
     }
 
-    console.log('getRandomAnswers');
+    console.log('getRandomAnswers:');
+    console.log([ansImg1, ansImg2, ansImg3, ansImg4]);
 }
 
 function chooseAnswer(q, a) {
@@ -97,15 +98,52 @@ function chooseAnswer(q, a) {
 
     if (q === 'hiragana' && a === 'romaji') {
         ans1.addEventListener('click', (event) => {
-            if (hiraganaValues.includes( { kana: question.src, romaji: ans1.src } )) {
+            // Format question.src and ans(n).src to match strings in DB
+            // Get the src strings, which will be like this:
+                // file:///home/khas/Git/Electron-Kana/img/hiragana/hira-e.png
+                // file:///home/khas/Git/Electron-Kana/img/romaji/roma-e.png
+            let questionSRC = question.src;
+            let answerSRC = ans1.src;
+
+            // Split strings into an array, by '/' (valid only for UNIX OSs!!)
+            let array1 = questionSRC.split('/');
+            let array2 = answerSRC.split('/');
+
+            // Rebuild the strings into their correct forms (as in DB):
+            questionSRC = '../' + array1[array1.length-3] + '/' + array1[array1.length-2] + '/' + array1[array1.length-1];
+            answerSRC = '../' + array2[array2.length-3] + '/' + array2[array2.length-2] + '/' + array2[array2.length-1];
+
+            // Create an object to search:
+            let obj = { kana: questionSRC, romaji: answerSRC };
+
+            // Remember that in javascript objects cannot be compared directly.
+            // Convert them to a JSON string and then compare as normal!!!
+
+            // Update check variables, and counter (using rebuilt strings!!)
+            if (hiraganaValues.some(element => JSON.stringify(obj) === JSON.stringify(element))) {
                 check = true;
+                console.log('q: '+ questionSRC + ' a: ' + answerSRC);
             }
             else {
                 check = false;
+                console.log('q: '+ questionSRC + ' a: ' + answerSRC);
             }
             
             checkAnswer();
             counter++;
+
+            // Then update screen variables
+            updateScreenVariables();
+
+            // And determine if looping is needed:
+            if (counter < 10) {
+                // Reset the question and answers
+                setQA(q, a);
+            }
+            else {
+                // When finished, go back to main menu
+                window.location.href = '../pages/index.html';
+            }
         });
         ans2.addEventListener('click', (event) => {
             if (hiraganaValues.includes( { kana: question.src, romaji: ans2.src } )) {
@@ -291,36 +329,31 @@ function checkAnswer() {
     }
 }
 
-function loopPractice(q, a) {
+function setQA(q, a) {
     getRandomQuestion(q, a);
     getRandomAnswers(q, a);
+}
 
-    temp_counter = counter;
-
-    while (counter < 100) {
-        // If some answer was clicked (this changes the counter variable)
-        if (temp_counter != counter) {
-            // Update variables on screen
-            counterID.innerText = counter.toString();
-            successesID.innerText = successes.toString();
-            failsID.innerText = fails.toString();
-            successPercentID.innerText = successPercent.toString();
-            
-            loopPractice(q, a);
-        }
-        // Else, keep waiting for answer clicked   
-    }    
+function updateScreenVariables() {
+    // Update variables on screen
+    counterID.innerText = counter.toString();
+    successesID.innerText = successes.toString();
+    failsID.innerText = fails.toString();
+    successPercentID.innerText = successPercent.toString();    
 }
 
 function initPractice(q, a) {
     // Set event listeners for answer group. Must be run
     // only ONCE per session to avoid memory issues 
     chooseAnswer(q, a);
-    loopPractice(q, a);
+
+    // Print screen variables for first time once
+    updateScreenVariables();
     
-    // Finish and go back to menu
-    // window.location.href = '../pages/index.html';
-    
+    // Set Question and Answers for first time once
+    setQA(q, a);
+
+    // Then give logic control to answer envent listeners...
 }
 
 export { initPractice };
