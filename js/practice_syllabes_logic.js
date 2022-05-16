@@ -2,6 +2,11 @@
 // possible answers
 import { hiraganaValues, katakanaValues } from "./syllabeValues.js";
 
+// Selection variables for question and answer
+var q = '';
+var a = '';
+
+// Tracking variables
 var check = false;
 var successes = 0;
 var fails = 0;
@@ -14,7 +19,15 @@ let successesID = document.getElementById('successes');
 let failsID = document.getElementById('fails');
 let successPercentID = document.getElementById('success-percent');
 
-// Set up algorithm steps as functions (some of them)
+// Question image and answers images DOM id selection
+let question = document.getElementById('question');
+let ans1 = document.getElementById('img1');
+let ans2 = document.getElementById('img2');
+let ans3 = document.getElementById('img3');
+let ans4 = document.getElementById('img4');
+
+
+// Set up algorithm steps as functions (some of them):
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -22,7 +35,7 @@ function getRandomIntInclusive(min, max) {
     //The maximum is inclusive and the minimum is inclusive
   }  
 
-function getRandomQuestion(q, a) {
+function getRandomQuestion() {
     let index = getRandomIntInclusive(1, hiraganaValues.length-1);
     let questionImg = document.getElementById('question');
 
@@ -43,7 +56,7 @@ function getRandomQuestion(q, a) {
     console.log(questionImg.src);
 }
 
-function getRandomAnswers(q, a) {
+function getRandomAnswers() {
     let ansImg1 = document.getElementById('img1');
     let ansImg2 = document.getElementById('img2');
     let ansImg3 = document.getElementById('img3');
@@ -78,7 +91,7 @@ function getRandomAnswers(q, a) {
     console.log([ansImg1, ansImg2, ansImg3, ansImg4]);
 }
 
-function chooseAnswer(q, a) {
+function chooseAnswer(answer, objOrder, kanaValues) {
     // Add event listeners to all 4 possible answers
     // When any answer is clicked, it triggers a callback function (anonymous) that
     // determines if it is correct or not.
@@ -90,233 +103,61 @@ function chooseAnswer(q, a) {
     //    exists
     // 4. If it does, it's a correct answer. If not, it's incorrect
 
-    const question = document.getElementById('question');
-    const ans1 = document.getElementById('img1');
-    const ans2 = document.getElementById('img2');
-    const ans3 = document.getElementById('img3');
-    const ans4 = document.getElementById('img4');
+    answer.addEventListener('click', (event) => {
+        // Format question.src and ans(n).src to match strings in DB
+        // Get the src strings, which will be like this:
+            // file:///home/khas/Git/Electron-Kana/img/hiragana/hira-e.png
+            // file:///home/khas/Git/Electron-Kana/img/romaji/roma-e.png
+        let questionSRC = question.src;
+        let answerSRC = answer.src;
 
-    if (q === 'hiragana' && a === 'romaji') {
-        ans1.addEventListener('click', (event) => {
-            // Format question.src and ans(n).src to match strings in DB
-            // Get the src strings, which will be like this:
-                // file:///home/khas/Git/Electron-Kana/img/hiragana/hira-e.png
-                // file:///home/khas/Git/Electron-Kana/img/romaji/roma-e.png
-            let questionSRC = question.src;
-            let answerSRC = ans1.src;
+        // Split strings into an array, by '/' (valid only for UNIX OSs!!)
+        let array1 = questionSRC.split('/');
+        let array2 = answerSRC.split('/');
 
-            // Split strings into an array, by '/' (valid only for UNIX OSs!!)
-            let array1 = questionSRC.split('/');
-            let array2 = answerSRC.split('/');
+        // Rebuild the strings into their correct forms (as in DB):
+        questionSRC = '../' + array1[array1.length-3] + '/' + array1[array1.length-2] + '/' + array1[array1.length-1];
+        answerSRC = '../' + array2[array2.length-3] + '/' + array2[array2.length-2] + '/' + array2[array2.length-1];
 
-            // Rebuild the strings into their correct forms (as in DB):
-            questionSRC = '../' + array1[array1.length-3] + '/' + array1[array1.length-2] + '/' + array1[array1.length-1];
-            answerSRC = '../' + array2[array2.length-3] + '/' + array2[array2.length-2] + '/' + array2[array2.length-1];
+        // Create an object to search using the specified order in 'objOrder' parameter:
+        if (objOrder.kana === 'questionSRC' && objOrder.romaji === 'answerSRC') {
+            objOrder.kana = questionSRC;
+            objOrder.romaji = answerSRC;
+        }
+        else if (objOrder.kana === 'answerSRC' && objOrder.romaji === 'questionSRC') {
+            objOrder.kana = answerSRC;
+            objOrder.romaji = questionSRC;
+        }
 
-            // Create an object to search:
-            let obj = { kana: questionSRC, romaji: answerSRC };
+        // Remember that in javascript objects cannot be compared directly.
+        // Convert them to a JSON string and then compare as normal!!!
 
-            // Remember that in javascript objects cannot be compared directly.
-            // Convert them to a JSON string and then compare as normal!!!
+        // Update check variables, and counter (using rebuilt strings!!)
+        if (kanaValues.some(element => JSON.stringify(objOrder) === JSON.stringify(element))) {
+            check = true;
+            console.log('q: '+ questionSRC + ' a: ' + answerSRC);
+        }
+        else {
+            check = false;
+            console.log('q: '+ questionSRC + ' a: ' + answerSRC);
+        }
+        
+        checkAnswer();
+        counter++;
 
-            // Update check variables, and counter (using rebuilt strings!!)
-            if (hiraganaValues.some(element => JSON.stringify(obj) === JSON.stringify(element))) {
-                check = true;
-                console.log('q: '+ questionSRC + ' a: ' + answerSRC);
-            }
-            else {
-                check = false;
-                console.log('q: '+ questionSRC + ' a: ' + answerSRC);
-            }
-            
-            checkAnswer();
-            counter++;
+        // Then update screen variables
+        updateScreenVariables();
 
-            // Then update screen variables
-            updateScreenVariables();
-
-            // And determine if looping is needed:
-            if (counter < 10) {
-                // Reset the question and answers
-                setQA(q, a);
-            }
-            else {
-                // When finished, go back to main menu
-                window.location.href = '../pages/index.html';
-            }
-        });
-        ans2.addEventListener('click', (event) => {
-            if (hiraganaValues.includes( { kana: question.src, romaji: ans2.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-            
-            checkAnswer();
-            counter++;
-        });
-        ans3.addEventListener('click', (event) => {
-            if (hiraganaValues.includes( { kana: question.src, romaji: ans3.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-        ans4.addEventListener('click', (event) => {
-            if (hiraganaValues.includes( { kana: question.src, romaji: ans4.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-    }
-    else if (q === 'romaji' && a === 'hiragana') {
-        ans1.addEventListener('click', (event) => {
-            if (hiraganaValues.includes( { kana: ans1.src, romaji: question.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-        ans2.addEventListener('click', (event) => {
-            if (hiraganaValues.includes( { kana: ans2.src, romaji: question.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-        ans3.addEventListener('click', (event) => {
-            if (hiraganaValues.includes( { kana: ans3.src, romaji: question.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-        ans4.addEventListener('click', (event) => {
-            if (hiraganaValues.includes( { kana: ans4.src, romaji: question.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-    }
-    else if (q === 'katakana' && a === 'romaji') {
-        ans1.addEventListener('click', (event) => {
-            if (katakanaValues.includes( { kana: question.src, romaji: ans1.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-        ans2.addEventListener('click', (event) => {
-            if (katakanaValues.includes( { kana: question.src, romaji: ans2.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-        ans3.addEventListener('click', (event) => {
-            if (katakanaValues.includes( { kana: question.src, romaji: ans3.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-        ans4.addEventListener('click', (event) => {
-            if (katakanaValues.includes( { kana: question.src, romaji: ans4.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-    }
-    else if (q === 'romaji' && a === 'katakana') {
-        ans1.addEventListener('click', (event) => {
-            if (katakanaValues.includes( { kana: ans1.src, romaji: question.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-        ans2.addEventListener('click', (event) => {
-            if (katakanaValues.includes( { kana: ans2.src, romaji: question.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-        ans3.addEventListener('click', (event) => {
-            if (katakanaValues.includes( { kana: ans3.src, romaji: question.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-        ans4.addEventListener('click', (event) => {
-            if (katakanaValues.includes( { kana: ans4.src, romaji: question.src } )) {
-                check = true;
-            }
-            else {
-                check = false;
-            }
-
-            checkAnswer();
-            counter++;
-        });
-    }
+        // And determine if looping is needed:
+        if (counter < 10) {
+            // Reset the question and answers
+            setQA();
+        }
+        else {
+            // When finished, go back to main menu
+            window.location.href = '../pages/index.html';
+        }
+    });
 }
 
 function checkAnswer() {
@@ -329,9 +170,9 @@ function checkAnswer() {
     }
 }
 
-function setQA(q, a) {
-    getRandomQuestion(q, a);
-    getRandomAnswers(q, a);
+function setQA() {
+    getRandomQuestion();
+    getRandomAnswers();
 }
 
 function updateScreenVariables() {
@@ -342,16 +183,44 @@ function updateScreenVariables() {
     successPercentID.innerText = successPercent.toString();    
 }
 
-function initPractice(q, a) {
+function initPractice(question, answer) {
+    // Set global selection variables once:
+    q = question;
+    a = answer;
+
     // Set event listeners for answer group. Must be run
     // only ONCE per session to avoid memory issues 
-    chooseAnswer(q, a);
+
+    if (q === 'hiragana' && a === 'romaji') {
+        chooseAnswer(ans1, { kana: 'questionSRC', romaji: 'answerSRC' }, hiraganaValues);
+        chooseAnswer(ans2, { kana: 'questionSRC', romaji: 'answerSRC' }, hiraganaValues);
+        chooseAnswer(ans3, { kana: 'questionSRC', romaji: 'answerSRC' }, hiraganaValues);
+        chooseAnswer(ans4, { kana: 'questionSRC', romaji: 'answerSRC' }, hiraganaValues);
+    }
+    else if (q === 'romaji' && a === 'hiragana') {
+        chooseAnswer(ans1, { kana: 'answerSrC', romaji: 'questionSRC' }, hiraganaValues);
+        chooseAnswer(ans2, { kana: 'answerSrC', romaji: 'questionSRC' }, hiraganaValues);
+        chooseAnswer(ans3, { kana: 'answerSrC', romaji: 'questionSRC' }, hiraganaValues);
+        chooseAnswer(ans4, { kana: 'answerSrC', romaji: 'questionSRC' }, hiraganaValues);
+    }
+    else if (q === 'katakana' && a === 'romaji') {
+        chooseAnswer(ans1, { kana: 'questionSRC', romaji: 'answerSRC' }, katakanaValues);
+        chooseAnswer(ans2, { kana: 'questionSRC', romaji: 'answerSRC' }, katakanaValues);
+        chooseAnswer(ans3, { kana: 'questionSRC', romaji: 'answerSRC' }, katakanaValues);
+        chooseAnswer(ans4, { kana: 'questionSRC', romaji: 'answerSRC' }, katakanaValues);
+    }
+    else if (q === 'romaji' && a === 'katakana') {
+        chooseAnswer(ans1, { kana: 'answerSrC', romaji: 'questionSRC' }, katakanaValues);
+        chooseAnswer(ans2, { kana: 'answerSrC', romaji: 'questionSRC' }, katakanaValues);
+        chooseAnswer(ans3, { kana: 'answerSrC', romaji: 'questionSRC' }, katakanaValues);
+        chooseAnswer(ans4, { kana: 'answerSrC', romaji: 'questionSRC' }, katakanaValues);
+    }
 
     // Print screen variables for first time once
     updateScreenVariables();
     
     // Set Question and Answers for first time once
-    setQA(q, a);
+    setQA();
 
     // Then give logic control to answer envent listeners...
 }
