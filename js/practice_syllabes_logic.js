@@ -39,7 +39,7 @@ function getRandomIntInclusive(min, max) {
   }  
 
 function getRandomQuestion() {
-    let index = getRandomIntInclusive(1, hiraganaValues.length-1);
+    let index = getRandomIntInclusive(0, hiraganaValues.length-1);
 
     // Show the question
     if (q === 'hiragana' && a === 'romaji') {
@@ -57,29 +57,34 @@ function getRandomQuestion() {
 }
 
 function getRandomAnswers() {
+    // Steps for setting one random correct answer, and three
+    // random incorrect answers:
+        // 1. Create list of answers
+        // 2. Randomly select one, set source to match question source
+        // 3. Randomly set source of remaining three answers (repetitions happen!)
     if (q === 'hiragana' && a === 'romaji') {
-        ans1.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ans2.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ans3.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ans4.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
+        ans1.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
+        ans2.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
+        ans3.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
+        ans4.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
     }
     else if (q === 'romaji' && a === 'hiragana') {
-        ans1.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ans2.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ans3.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ans4.src = `${hiraganaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
+        ans1.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
+        ans2.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
+        ans3.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
+        ans4.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
     }
     else if (q === 'katakana' && a === 'romaji') {
-        ans1.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ans2.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ans3.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;
-        ans4.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].romaji}`;    
+        ans1.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
+        ans2.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
+        ans3.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
+        ans4.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;    
     }
     else if (q === 'romaji' && a === 'katakana') {
-        ans1.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ans2.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ans3.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;
-        ans4.src = `${katakanaValues[getRandomIntInclusive(1, hiraganaValues.length-1)].kana}`;   
+        ans1.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
+        ans2.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
+        ans3.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
+        ans4.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;   
     }
 }
 
@@ -216,7 +221,7 @@ function initPractice(question, answer) {
     // Set Question and Answers for first time once
     setQA();
 
-    // Then give logic control to answer envent listeners...
+    // Then give logic control to answer event listeners...
 }
 
 export { initPractice };
