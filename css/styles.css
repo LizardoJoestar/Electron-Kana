@@ -8,6 +8,22 @@
     margin: 4px;
 }
 
+.elem-trackers {
+    text-align: center;
+}
+
+.elem-trackers h2, p{
+    display: inline-block;
+}
+
+.elem-trackers h2{
+    margin-left: 3%;
+}
+
+.elem-trackers p{
+    margin-left: 10px;
+}
+
 @keyframes fadeIn{
     0%{
         opacity: 0%;
@@ -17,7 +33,7 @@
     }
 }
 
-h1,h2,h4{
+h1,h2,h4,p{
     opacity: 0%;
     animation: fadeIn;
     animation-duration: 1s;
@@ -34,7 +50,7 @@ img {
   margin-right: auto;
 }
 
-h4{
+h4,p{
     animation-delay: 2s;
 }
 
@@ -57,6 +73,7 @@ header{
     background: linear-gradient(90deg, rgba(16,28,34,1) 50%, rgba(26,51,82,1) 100%);
     width: 100%;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
 }
 
 span{
@@ -69,4 +86,5 @@ footer{
     bottom:0;
     left:0;
     width: 100%;
+    text-align: center;
 }
