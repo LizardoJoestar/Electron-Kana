@@ -26,19 +26,12 @@
 
     <br><br>
     <!-- Question -->
-    <h2 id="word">#####</h2>
+    <h2 id="question">#####</h2>
 
     <!-- Answer (user input) -->
     <input type="text" name="input" id="input">
     <button id="submit">Check answer</button>
-
-    <script>
-        var input = document.getElementById('input');
-
-        document.getElementById('submit').onclick = function submitInput() {
-           localStorage.setItem('input', input.innerText); 
-        }
-    </script>
+    
     <script type="module" src="../js/practice_words.js"></script>
 </body>
 </html>
