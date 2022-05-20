@@ -56,36 +56,52 @@ function getRandomQuestion() {
     }
 }
 
-function getRandomAnswers() {
+function getRandomAnswers(kanaValues, property) {
     // Steps for setting one random correct answer, and three
     // random incorrect answers:
         // 1. Create list of answers
         // 2. Randomly select one, set source to match question source
         // 3. Randomly set source of remaining three answers (repetitions happen!)
-    if (q === 'hiragana' && a === 'romaji') {
-        ans1.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
-        ans2.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
-        ans3.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
-        ans4.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
+
+    var answerList = [ans1, ans2, ans3, ans4];
+    var correctAns = getRandomIntInclusive(0,3);
+    var index = 0;
+
+    // Convert each object in hiraganaValues to JSON string, then
+    // search within it the question.src string. If found, take the
+    // index of such element to set the correct answer src property
+    // to match the question.src, as it appears in the DB
+    kanaValues.forEach(element => {
+        if (JSON.stringify(element).includes(formatSourceToDB(question.src))) {
+            index = kanaValues.indexOf(element);  
+            console.log('index: ' + index);
+        }
+    });
+
+    if (property === 'romaji') {
+        answerList[correctAns].src = kanaValues[index].romaji;
+        console.log('answerList[correctAns].src: ' + answerList[correctAns].src);
+        console.log('kanaValues[index].romaji: ' + kanaValues[index].romaji);
+
+        // Set the rest of the answers's sources strings
+        answerList.forEach(element => {
+            if (answerList.indexOf(element) != correctAns) {
+                element.src = `${kanaValues[getRandomIntInclusive(0, kanaValues.length-1)].romaji}`;
+            }
+        });
     }
-    else if (q === 'romaji' && a === 'hiragana') {
-        ans1.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
-        ans2.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
-        ans3.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
-        ans4.src = `${hiraganaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
-    }
-    else if (q === 'katakana' && a === 'romaji') {
-        ans1.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
-        ans2.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
-        ans3.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;
-        ans4.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].romaji}`;    
-    }
-    else if (q === 'romaji' && a === 'katakana') {
-        ans1.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
-        ans2.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
-        ans3.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;
-        ans4.src = `${katakanaValues[getRandomIntInclusive(0, hiraganaValues.length-1)].kana}`;   
-    }
+    else if (property === 'kana') {
+        answerList[correctAns].src = kanaValues[index].kana;
+        console.log('answerList[correctAns].src: ' + answerList[correctAns].src);
+        console.log('kanaValues[index].kana: ' + kanaValues[index].kana);
+
+        // Set the rest of the answers's sources strings
+        answerList.forEach(element => {
+            if (answerList.indexOf(element) != correctAns) {
+                element.src = `${kanaValues[getRandomIntInclusive(0, kanaValues.length-1)].kana}`;
+            }
+        });
+    }    
 }
 
 function chooseAnswer(answer, objOrder, kanaValues) {
@@ -101,20 +117,8 @@ function chooseAnswer(answer, objOrder, kanaValues) {
     // 4. If it does, it's a correct answer. If not, it's incorrect
 
     answer.addEventListener('click', (event) => {
-        // Format question.src and ans(n).src to match strings in DB
-        // Get the src strings, which will be like this:
-            // file:///home/khas/Git/Electron-Kana/img/hiragana/hira-e.png
-            // file:///home/khas/Git/Electron-Kana/img/romaji/roma-e.png
-        let questionSRC = question.src;
-        let answerSRC = answer.src;
-
-        // Split strings into an array, by '/' (valid only for UNIX OSs!!)
-        let array1 = questionSRC.split('/');
-        let array2 = answerSRC.split('/');
-
-        // Rebuild the strings into their correct forms (as in DB):
-        questionSRC = '../' + array1[array1.length-3] + '/' + array1[array1.length-2] + '/' + array1[array1.length-1];
-        answerSRC = '../' + array2[array2.length-3] + '/' + array2[array2.length-2] + '/' + array2[array2.length-1];
+        let questionSRC = formatSourceToDB(question.src);
+        let answerSRC = formatSourceToDB(answer.src);
 
         // Create an object to search using the specified order in 'objOrder' parameter:
         if (objOrder.kana === 'questionSRC' && objOrder.romaji === 'answerSRC') {
@@ -172,7 +176,20 @@ function checkAnswer() {
 
 function setQA() {
     getRandomQuestion();
-    getRandomAnswers();
+
+    if (q === 'hiragana' && a === 'romaji') {
+        getRandomAnswers(hiraganaValues, 'romaji');
+    }
+    else if (q === 'romaji' && a === 'hiragana') {
+        getRandomAnswers(hiraganaValues, 'kana');
+    }
+    else if (q === 'katakana' && a === 'romaji') {
+        getRandomAnswers(katakanaValues, 'romaji');
+    }
+    else if (q === 'romaji' && a === 'katakana') {
+        getRandomAnswers(katakanaValues, 'kana');
+    }
+    // getRandomAnswers();
 }
 
 function updateScreenVariables() {
@@ -181,6 +198,19 @@ function updateScreenVariables() {
     successesID.innerText = successes.toString();
     failsID.innerText = fails.toString();
     successPercentID.innerText = successPercent.toFixed(2).toString();    
+}
+
+function formatSourceToDB(source) {
+    // Format question.src and ans(n).src to match strings in DB
+    // Get the src strings, which will be like this:
+        // file:///home/khas/Git/Electron-Kana/img/hiragana/hira-e.png
+        // file:///home/khas/Git/Electron-Kana/img/romaji/roma-e.png
+    
+    // Split strings into an array, by '/' (valid only for UNIX OSs!!)
+    let array = source.split('/');
+
+    // Rebuild the strings into their correct forms (as in DB):
+    return source = '../' + array[array.length-3] + '/' + array[array.length-2] + '/' + array[array.length-1];
 }
 
 function initPractice(question, answer) {
