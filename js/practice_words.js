@@ -1,4 +1,4 @@
-import { words } from "./syllabeValues";
+import { words } from "./syllabeValues.js";
 
 // Tracking variables
 var check = false;
@@ -34,6 +34,8 @@ function getRandomIntInclusive(min, max) {
 function getRandomQuestion() {
     index = getRandomIntInclusive(0, words.length-1);
     question.innerText = words[index].jap;
+    console.log('Expected: '+ words[index].jap);
+    console.log('Actual: ' + question.innerText);
 }
 
 function getAnswer() {
@@ -87,8 +89,12 @@ function checkAnswer() {
 }
 
 function initPractice() {
+    // Set quesion once first
     getRandomQuestion();
 
+    // Set on screen tracking variables once first
+    updateScreenVariables()
+    
     // Set event listener for answer submit button
     getAnswer();
 
