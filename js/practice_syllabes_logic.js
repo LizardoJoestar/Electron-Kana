@@ -1,7 +1,7 @@
 // Syllabe image sources. These serve to present both the question and the
 // possible answers
 import { hiraganaValues, katakanaValues } from "./syllabeValues.js";
-// import * as fs from 'fs'
+// import * as fs from 'fs/promises'
 
 // Selection variables for question and answer
 var q = '';
