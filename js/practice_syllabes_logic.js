@@ -1,6 +1,7 @@
 // Syllabe image sources. These serve to present both the question and the
 // possible answers
 import { hiraganaValues, katakanaValues } from "./syllabeValues.js";
+// import * as fs from 'fs'
 
 // Selection variables for question and answer
 var q = '';
@@ -157,6 +158,19 @@ function chooseAnswer(answer, objOrder, kanaValues) {
             setQA();
         }
         else {
+            // Read maxConsecuteSuccesses data from records file
+            // let record = JSON.parse(fs.readFile('../data/records.json')).maxConsecutiveSuccesses;
+            // if (record < successes) {
+            //     // Create temp object, copy of records file
+            //     let tempObj = JSON.parse(fs.readFile('../data/records.json'));
+                
+            //     // Modify temp object with new current record
+            //     tempObj.maxConsecutiveSuccesses = successes; 
+
+            //     // Overwrite record file with temp object
+            //     fs.writeFile('../data/records.json', JSON.stringify(tempObj));
+            // }
+            
             // When finished, go back to main menu
             window.location.href = '../pages/index.html';
         }
