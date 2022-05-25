@@ -1,0 +1,49 @@
+.
+├── bootstrap
+│   ├── css [32 entries exceeds filelimit, not opening dir]
+│   └── js
+│       ├── bootstrap.bundle.js
+│       ├── bootstrap.bundle.js.map
+│       ├── bootstrap.bundle.min.js
+│       ├── bootstrap.bundle.min.js.map
+│       ├── bootstrap.esm.js
+│       ├── bootstrap.esm.js.map
+│       ├── bootstrap.esm.min.js
+│       ├── bootstrap.esm.min.js.map
+│       ├── bootstrap.js
+│       ├── bootstrap.js.map
+│       ├── bootstrap.min.js
+│       └── bootstrap.min.js.map
+├── css
+│   └── styles.css
+├── img
+│   ├── diagram-references
+│   │   ├── hiragana-stroke-order.jpg
+│   │   └── katakana-stroke-order.jpg
+│   ├── hiragana [71 entries exceeds filelimit, not opening dir]
+│   ├── kana-logo.png
+│   ├── katakana [74 entries exceeds filelimit, not opening dir]
+│   ├── romaji [74 entries exceeds filelimit, not opening dir]
+│   └── syllabes-references
+│       ├── hiragana-chart.png
+│       └── katakana-chart.jpg
+├── js
+│   ├── flags.js
+│   ├── practice_syllabes.js
+│   ├── practice_syllabes_logic.js
+│   ├── practice_words.js
+│   └── syllabeValues.js
+├── main.js
+├── node_modules [81 entries exceeds filelimit, not opening dir]
+├── package.json
+├── package-lock.json
+├── pages
+│   ├── index.html
+│   ├── practice_syllabes.html
+│   ├── practice_words.html
+│   ├── reference_diagrams.html
+│   └── reference_syllabes.html
+├── preload.js
+└── tree.txt
+
+13 directories, 33 files

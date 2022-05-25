@@ -23,3 +23,7 @@ document.getElementById('RK').onclick = function setFlags4() {
     localStorage.setItem('answers', 'katakana');
     window.location.href = '../pages/practice_syllabes.html';
 };
+
+document.getElementById('PW').onclick = function PracticeWords() {
+    window.location.href = '../pages/practice_words.html';
+}

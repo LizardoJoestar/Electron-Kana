@@ -17,4 +17,17 @@ const katakanaValues = [
     { kana: '../img/katakana/kata-u.png', romaji: '../img/romaji/roma-u.png' }    
 ];
 
-export {hiraganaValues, katakanaValues}
+const words = [
+    { jap: 'ペン', romaji: 'pen' },
+    { jap: 'フットボール', romaji: 'futtobooru' },
+    { jap: 'えんぴつ', romaji: 'enpitsu' },
+    { jap: 'ぼうし', romaji: 'boushi' },
+    { jap: 'コミック', romaji: 'comikku' },
+    { jap: 'かんべん', romaji: 'kanpen' },
+    { jap: 'たんじゅん', romaji: 'tanjun' },
+    { jap: 'たんじょうび', romaji: 'tanjoubi' },
+    { jap: 'サラリーマン', romaji: 'sarariiman' },
+    { jap: 'ゲイ', romaji: 'gey' }
+];
+
+export {hiraganaValues, katakanaValues, words}
