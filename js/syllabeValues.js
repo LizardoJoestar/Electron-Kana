@@ -23,11 +23,11 @@ const words = [
     { jap: 'えんぴつ', romaji: 'enpitsu' },
     { jap: 'ぼうし', romaji: 'boushi' },
     { jap: 'コミック', romaji: 'comikku' },
-    { jap: 'かんべん', romaji: 'kanpen' },
+    { jap: 'かんべん', romaji: 'kanben' },
     { jap: 'たんじゅん', romaji: 'tanjun' },
     { jap: 'たんじょうび', romaji: 'tanjoubi' },
     { jap: 'サラリーマン', romaji: 'sarariiman' },
-    { jap: 'ゲイ', romaji: 'gey' }
+    { jap: 'ゲイ', romaji: 'gei' }
 ];
 
 export {hiraganaValues, katakanaValues, words}

@@ -18,7 +18,9 @@ let successPercentID = document.getElementById('success-percent');
 
 // Get question and input (user answer) DOM id
 let question = document.getElementById('question');
-let input = document.getElementById('input');
+
+// Get submit button DOM id
+let submit = document.getElementById('submit');
 
 // Question index in words DB:
 let index = 0;
@@ -34,16 +36,18 @@ function getRandomIntInclusive(min, max) {
 function getRandomQuestion() {
     index = getRandomIntInclusive(0, words.length-1);
     question.innerText = words[index].jap;
+    console.log('getRandomQuestion():')
     console.log('Expected: '+ words[index].jap);
     console.log('Actual: ' + question.innerText);
 }
 
 function getAnswer() {
-    var submit = document.getElementById('submit');
-
     submit.addEventListener('click', () => {
+        // Get user answer (input)
+        let inputField = document.getElementById('input');
+
         // Check if the input answer is correct
-        if (input.innerText === words[index].romaji) {
+        if (inputField.value === words[index].romaji) {
             check = true;
         }
         else {
@@ -61,7 +65,7 @@ function getAnswer() {
         if (counter <= maxQuestions) {
             // Reset the question and input field
             getRandomQuestion()
-            input.innerText = '';
+            inputField.innerText = '';
         }
         else {
             // When finished, go back to main menu
