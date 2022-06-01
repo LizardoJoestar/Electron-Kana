@@ -24,6 +24,11 @@
     margin-left: 10px;
 }
 
+.imgdisplay{
+    width: 130px;
+    height: 104px;
+}
+
 @keyframes fadeIn{
     0%{
         opacity: 0%;
@@ -67,6 +72,7 @@ hr{
 body{
     background: linear-gradient(45deg, rgba(16,28,34,1) 0%, rgba(27,43,66,1) 33%, rgba(42,69,99,1) 66%, rgba(45,79,114,1) 100%) fixed;
     color: white;
+    text-align: center;
 }
 
 header{
@@ -82,7 +88,7 @@ span{
 
 footer{
     background: linear-gradient(90deg, rgba(16,28,44,1) 0%, rgba(0,0,0,1) 33%);
-    position: absolute;
+    position: fixed;
     bottom:0;
     left:0;
     width: 100%;
