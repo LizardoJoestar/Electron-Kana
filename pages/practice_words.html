@@ -4,38 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Práctica - Palabras en kana</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.css"/>
 	<link rel="stylesheet" href="../css/styles.css"/>
 </head>
 <body>
     <header>
-        <h1>Practice page - Words</h1>
+        <h1>Práctica - Palabras en kana</h1>
     </header>
     <!-- Tracking variables -->
     <div class="elem-trackers">
-        <h2>Counter: </h2>
+        <h2>Contador: </h2>
         <p id="counter"></p>
-        <h2>Successes: </h2>
+        <h2>Aciertos: </h2>
         <p id="successes"></p>
-        <h2>Fails: </h2>
+        <h2>Fallos: </h2>
         <p id="fails"></p>
-        <h2>Success percent: </h2>
+        <h2>Porcentaje de aciertos: </h2>
         <p id="success-percent"></p><p>%</p>
     </div>
 
     <br><br>
-    <!-- Question -->
-    <h2 id="question">#####</h2>
-
-    <!-- Answer (user input) -->
-    <input type="text" name="input" id="input">
-
-    <br><br>
-    <button id="submit">Check answer</button>
+    <div style="text-align: center;">
+        <!-- Question -->
+        <h2 id="question">#####</h2>
     
-    <br><br>
-    <a href="index.html" class="btn btn-dark btn-lg btn-block">Volver al menú</a>
+        <!-- Answer (user input) -->
+        <input type="text" name="input" id="input">
+    
+        <br><br>
+        <button id="submit">Checar respuesta</button>
+        
+        <br><br>
+        <a href="index.html" class="btn btn-dark btn-lg btn-block">Volver al menú</a>
+    </div>
 
     <script type="module" src="../js/practice_words.js"></script>
 </body>
